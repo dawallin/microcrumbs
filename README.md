@@ -10,8 +10,5 @@ In the world of microservices, responsibilities are broken down into small indiv
 ###End-to-End tracing
 The interactor tracing data can then be sent to a centralized collector. From there it can then be used for monitoring, querying or analysing in end-to-end tracing tools like [Zipkin](https://twitter.github.io/zipkin/),  [PinPoint](https://github.com/naver/pinpoint) or [Phosphor](https://github.com/mattheath/phosphor). All these are based on the technique from the Google [Dapper project](https://research.google.com/pubs/pub36356.html).
 
-### Unix philosophy
->**The Unix philosophy:** 
-Write programs that do one thing and do it well.
-
+### Only gathering data
 Microcrumbs adhere to the Unix Philosophy ("Write programs that do one thing and do it well."), and is specialiced in only one thing, gathering interaction data. Analysis and presentaion is left for other projects.
