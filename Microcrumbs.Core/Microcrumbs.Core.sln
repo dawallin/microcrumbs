@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microcrumbs.Core", "Microcrumbs.Core\Microcrumbs.Core.csproj", "{AE58C2CD-3283-45A5-986B-9A2099D776F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microcrumbs.Core.UnitTests", "Microcrumbs.Core.UnitTests\Microcrumbs.Core.UnitTests.csproj", "{96A00690-3BC2-4DCD-BA17-70DE4A806832}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE58C2CD-3283-45A5-986B-9A2099D776F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE58C2CD-3283-45A5-986B-9A2099D776F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE58C2CD-3283-45A5-986B-9A2099D776F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE58C2CD-3283-45A5-986B-9A2099D776F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A00690-3BC2-4DCD-BA17-70DE4A806832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A00690-3BC2-4DCD-BA17-70DE4A806832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A00690-3BC2-4DCD-BA17-70DE4A806832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A00690-3BC2-4DCD-BA17-70DE4A806832}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
