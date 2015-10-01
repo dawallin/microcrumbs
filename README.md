@@ -1,4 +1,4 @@
-Microcrumbs
+Microcrumbs [![Build status](https://ci.appveyor.com/api/projects/status/github/dawallin/microcrumbs?branch=master&svg=true)](https://ci.appveyor.com/project/dawallin/microcrumbs) 
 ===================
 
 Microcrumbs is an open source, .Net tracer library for distributed tracing. 
