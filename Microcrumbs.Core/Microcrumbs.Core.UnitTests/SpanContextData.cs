@@ -6,7 +6,4 @@ using System.Threading.Tasks;
 
 namespace Microcrumbs.Core.UnitTests
 {
-    public class Class1
-    {
-    }
 }
