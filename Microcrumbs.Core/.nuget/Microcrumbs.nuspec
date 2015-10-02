@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Microcrumbs</id>
+		<title>Microcrumbs</title>
+        <version>0.1.2.1</version>
+        <authors>DaWallin</authors>
+		<projectUrl>http://microcrumbs.dawallin.com</projectUrl>
+		<licenseUrl>https://raw.githubusercontent.com/dawallin/microcrumbs/master/LICENSE</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Tracer library for distributed tracing.</description>
+        <tags>distributed tracing zipkin pinpoint htrace dapper</tags>
+    </metadata>
+    <files>
+	  <file src="..\Microcrumbs.Core\bin\Release\Microcrumbs.Core.dll" target="lib\net40\" />
+	  <file src="..\Microcrumbs.Core\bin\Release\Microcrumbs.Core.pdb" target="lib\net40\" />
+	  <file src="..\Microcrumbs.Core\*.cs" target="src" />
+    </files>
+</package>
