@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientTracer.cs" />
+    <Compile Include="IClientTracer.cs" />
     <Compile Include="IServiceTracer.cs" />
     <Compile Include="ISpanContextFactory.cs" />
     <Compile Include="ISpanSubmitter.cs" />
