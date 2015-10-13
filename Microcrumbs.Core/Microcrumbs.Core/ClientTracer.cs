@@ -17,12 +17,12 @@
         {
             var clientSpanContext = _spanContextFactory.NewSpan();
             _threadContext.Set(clientSpanContext);
-            _spanSubmitter.Send(SpanType.ClientSend);
+            _spanSubmitter.Send(SpanType.ClientSend, clientSpanContext);
         }
 
-        public void FinishSpan()
+        public void FinishSpan(SpanContext clientSpanContext)
         {
-            _spanSubmitter.Send(SpanType.ClientReceive);
+            _spanSubmitter.Send(SpanType.ClientReceive, clientSpanContext);
         }
     }
 }

@@ -3,6 +3,6 @@
     public interface IClientTracer
     {
         void StartClientSpan(string serviceName);
-        void FinishSpan();
+        void FinishSpan(SpanContext clientSpanContext);
     }
 }
