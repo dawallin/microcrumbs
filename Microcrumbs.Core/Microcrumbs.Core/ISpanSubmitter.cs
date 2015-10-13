@@ -2,6 +2,6 @@
 {
     public interface ISpanSubmitter
     {
-        void Send(SpanType spanType);
+        void Send(SpanType spanType, SpanContext spanContext);
     }
 }
