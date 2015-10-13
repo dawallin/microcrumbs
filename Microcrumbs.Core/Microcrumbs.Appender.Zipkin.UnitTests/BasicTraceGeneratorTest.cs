@@ -11,6 +11,7 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
     public class BasicTraceGeneratorTest
     {
         [Test]
+        [Explicit]
         public void SendSimpleTraceToZipkin()
         {
             using (var socket = new TSocket("192.168.99.100", 9410))
