@@ -1,6 +1,6 @@
 ﻿namespace Microcrumbs.Core
 {
-    class ClientTracer : IClientTracer
+    public class ClientTracer : IClientTracer
     {
         private readonly IThreadContext _threadContext;
         private readonly ISpanContextFactory _spanContextFactory;
@@ -13,11 +13,13 @@
             _spanSubmitter = spanSubmitter;
         }
 
-        public void StartClientSpan(string serviceName)
+        public SpanContext StartClientSpan(string serviceName)
         {
             var clientSpanContext = _spanContextFactory.NewSpan();
             _threadContext.Set(clientSpanContext);
             _spanSubmitter.Send(SpanType.ClientSend, clientSpanContext);
+
+            return clientSpanContext;
         }
 
         public void FinishSpan(SpanContext clientSpanContext)

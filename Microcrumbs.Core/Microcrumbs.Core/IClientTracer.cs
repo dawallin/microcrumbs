@@ -2,7 +2,7 @@
 {
     public interface IClientTracer
     {
-        void StartClientSpan(string serviceName);
+        SpanContext StartClientSpan(string serviceName);
         void FinishSpan(SpanContext clientSpanContext);
     }
 }
