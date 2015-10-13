@@ -8,7 +8,7 @@ using Thrift.Transport;
 
 namespace Microcrumbs.Appender.Zipkin
 {
-    class DirectZipkinSubmitter : ISpanSubmitter
+    public class DirectZipkinSubmitter : ISpanSubmitter
     {
         private readonly ZipkinSettings _zipkinSettings;
 
