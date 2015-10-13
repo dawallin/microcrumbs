@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISpanContextFactory.cs" />
+    <Compile Include="ISpanSubmitter.cs" />
     <Compile Include="IThreadContext.cs" />
     <Compile Include="LogicalThreadContext.cs" />
     <Compile Include="SpanContext.cs" />
