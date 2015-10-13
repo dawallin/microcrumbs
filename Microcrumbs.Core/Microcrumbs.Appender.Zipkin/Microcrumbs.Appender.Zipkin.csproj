@@ -37,7 +37,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Thrift, Version=0.9.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ApacheThrift.0.9.2\lib\Thrift.dll</HintPath>
@@ -45,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectZipkinSubmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Thrift\Scribe\LogEntry.cs" />
     <Compile Include="Thrift\Scribe\ResultCode.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="Thrift\ZipkinDependencies\DependenciesException.cs" />
     <Compile Include="Thrift\ZipkinDependencies\DependencyLink.cs" />
     <Compile Include="Thrift\ZipkinDependencies\DependencyStore.cs" />
+    <Compile Include="ZipkinSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Thrift\thrift-0.9.2.exe" />
@@ -72,6 +73,12 @@
     <None Include="Thrift\ZipkinCollector\ZipkinCollector.thrift" />
     <None Include="Thrift\ZipkinCore\ZipkinCore.thrift" />
     <None Include="Thrift\ZipkinDependencies\ZipkinDependencies.thrift" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microcrumbs.Core\Microcrumbs.Core.csproj">
+      <Project>{ae58c2cd-3283-45a5-986b-9a2099d776f1}</Project>
+      <Name>Microcrumbs.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
