@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MicrocrumbsTraceGeneratorTest.cs" />
     <Compile Include="BasicTraceGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\Microcrumbs.Appender.Zipkin\Microcrumbs.Appender.Zipkin.csproj">
       <Project>{76ec69e1-3cf4-411d-b39b-5915714c4ba3}</Project>
       <Name>Microcrumbs.Appender.Zipkin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microcrumbs.Core\Microcrumbs.Core.csproj">
+      <Project>{ae58c2cd-3283-45a5-986b-9a2099d776f1}</Project>
+      <Name>Microcrumbs.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
