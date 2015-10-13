@@ -13,7 +13,7 @@ namespace Microcrumbs.Core
 
         public SpanContext NewTrace(string serviceName)
         {
-            return new SpanContext(serviceName, NewGuid(), NewGuid(), NewGuid());
+            return new SpanContext(serviceName, NewGuid(), 0, NewGuid());
         }
 
         public SpanContext NewSpan()
