@@ -4,6 +4,6 @@
     {
         void StartNewTrace(string serviceName);
         void ContinueTrace(SpanContext spanContext);
-        void FinishRequest();
+        void FinishRequest(SpanContext spanContext);
     }
 }

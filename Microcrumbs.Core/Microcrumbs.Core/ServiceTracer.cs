@@ -15,19 +15,20 @@
 
         public void StartNewTrace(string serviceName)
         {
-            _threadContext.Set(_spanContextFactory.NewTrace(serviceName));
-            _spanSubmitter.Send(SpanType.ServerRecieve);
+            var newSpanContext = _spanContextFactory.NewTrace(serviceName);
+            _threadContext.Set(newSpanContext);
+            _spanSubmitter.Send(SpanType.ServerRecieve, newSpanContext);
         }
 
         public void ContinueTrace(SpanContext spanContext)
         {
             _threadContext.Set(spanContext);
-            _spanSubmitter.Send(SpanType.ServerRecieve);
+            _spanSubmitter.Send(SpanType.ServerRecieve, spanContext);
         }
 
-        public void FinishRequest()
+        public void FinishRequest(SpanContext spanContext)
         {
-            _spanSubmitter.Send(SpanType.ServerSend);
+            _spanSubmitter.Send(SpanType.ServerSend, spanContext);
         }
     }
 }
