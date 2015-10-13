@@ -2,7 +2,7 @@
 {
     public interface IServiceTracer
     {
-        void StartNewTrace(string serviceName);
+        SpanContext StartNewTrace(string serviceName);
         void ContinueTrace(SpanContext spanContext);
         void FinishRequest(SpanContext spanContext);
     }

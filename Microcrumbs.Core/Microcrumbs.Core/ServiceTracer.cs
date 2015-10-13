@@ -13,11 +13,13 @@
             _spanSubmitter = spanSubmitter;
         }
 
-        public void StartNewTrace(string serviceName)
+        public SpanContext StartNewTrace(string serviceName)
         {
             var newSpanContext = _spanContextFactory.NewTrace(serviceName);
             _threadContext.Set(newSpanContext);
             _spanSubmitter.Send(SpanType.ServerRecieve, newSpanContext);
+
+            return newSpanContext;
         }
 
         public void ContinueTrace(SpanContext spanContext)
