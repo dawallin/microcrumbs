@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServiceTracer.cs" />
     <Compile Include="ISpanContextFactory.cs" />
     <Compile Include="ISpanSubmitter.cs" />
     <Compile Include="IThreadContext.cs" />
     <Compile Include="LogicalThreadContext.cs" />
+    <Compile Include="ServiceTracer.cs" />
     <Compile Include="SpanContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpanContextFactory.cs" />
