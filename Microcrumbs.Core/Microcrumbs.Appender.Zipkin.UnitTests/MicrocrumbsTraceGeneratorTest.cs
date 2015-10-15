@@ -29,15 +29,15 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
             var serverTracer = new ServiceTracer(threadContext, spanContextFactory, zipkinSubmitter);
             var clientTracer = new ClientTracer(spanContextFactory, zipkinSubmitter);
 
-            var spanContext = serverTracer.StartNewTrace("MicrocrumbsTraceGenerator");
+            var span = serverTracer.StartNewTrace("MicrocrumbsTraceGenerator");
 
-            var clientSpanContext = clientTracer.StartClientSpan("CallOut");
-            clientTracer.FinishSpan(clientSpanContext);
+            var span1 = clientTracer.StartClientSpan("CallOut");
+            span1.Finish();
+ 
+            var span2 = clientTracer.StartClientSpan("CallOut2");
+            span2.Finish();
 
-            var clientSpanContext2 = clientTracer.StartClientSpan("CallOut2");
-            clientTracer.FinishSpan(clientSpanContext2);
-
-            serverTracer.FinishRequest(spanContext);            
+            span.Finish();
         }
     }
 }
