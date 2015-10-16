@@ -2,7 +2,7 @@
 
 namespace Microcrumbs.Core
 {
-    public class ClientTracer : IClientTracer
+    public class ClientTracer
     {
         private readonly ISpanContextFactory _spanContextFactory;
         private readonly IThreadContext _threadContext;

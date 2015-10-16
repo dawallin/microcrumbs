@@ -1,6 +1,6 @@
 ﻿namespace Microcrumbs.Core
 {
-    public class ServiceTracer : IServiceTracer
+    public class ServiceTracer
     {
         private readonly IThreadContext _threadContext;
         private readonly ISpanContextFactory _spanContextFactory;
