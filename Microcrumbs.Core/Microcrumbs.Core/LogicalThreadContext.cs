@@ -3,7 +3,7 @@ using System.Runtime.Remoting.Messaging;
 
 namespace Microcrumbs.Core
 {
-    public class LogicalThreadContext : IThreadContext
+    internal class LogicalThreadContext : IThreadContext
     {
         private const string ServiceNamePropertyName = "Microcrumbs:ServiceName";
         private const string TraceIdPropertyName = "Microcrumbs:TraceId";

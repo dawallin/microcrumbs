@@ -1,6 +1,6 @@
 ﻿namespace Microcrumbs.Core
 {
-    public interface IThreadContext
+    internal interface IThreadContext
     {
         void Set(SpanContext spanContext);
         SpanContext Get();

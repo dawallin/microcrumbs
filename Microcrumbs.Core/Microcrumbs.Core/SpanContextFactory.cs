@@ -2,7 +2,7 @@
 
 namespace Microcrumbs.Core
 {
-    public class SpanContextFactory : ISpanContextFactory
+    internal class SpanContextFactory : ISpanContextFactory
     {
         public SpanContextFactory()
         {
