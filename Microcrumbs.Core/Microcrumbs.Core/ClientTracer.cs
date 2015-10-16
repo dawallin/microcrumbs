@@ -1,6 +1,4 @@
-﻿using System.Runtime.Remoting.Messaging;
-
-namespace Microcrumbs.Core
+﻿namespace Microcrumbs.Core
 {
     public class ClientTracer
     {

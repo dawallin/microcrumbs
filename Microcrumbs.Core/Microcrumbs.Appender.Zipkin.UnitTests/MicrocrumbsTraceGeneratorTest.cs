@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using Microcrumbs.Core;
+﻿using Microcrumbs.Core;
 using NUnit.Framework;
-using Thrift.Protocol;
-using Thrift.Transport;
 
 namespace Microcrumbs.Appender.Zipkin.UnitTests
 {
