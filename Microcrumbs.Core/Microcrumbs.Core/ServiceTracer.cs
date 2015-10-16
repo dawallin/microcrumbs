@@ -6,7 +6,7 @@
         private readonly ISpanContextFactory _spanContextFactory;
         private readonly ISpanSubmitter _spanSubmitter;
 
-        public ServiceTracer(IThreadContext threadContext, ISpanContextFactory spanContextFactory, ISpanSubmitter spanSubmitter)
+        internal ServiceTracer(IThreadContext threadContext, ISpanContextFactory spanContextFactory, ISpanSubmitter spanSubmitter)
         {
             _threadContext = threadContext;
             _spanContextFactory = spanContextFactory;

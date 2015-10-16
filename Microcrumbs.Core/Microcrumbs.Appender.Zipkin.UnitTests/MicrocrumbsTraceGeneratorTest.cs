@@ -22,12 +22,10 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
             };
 
             var zipkinSubmitter = new DirectZipkinSubmitter(zipkinSettings);
+            var traceBuilder = new TracerBuilder().SetSpanSubmitter(zipkinSubmitter);
 
-            var threadContext = new LogicalThreadContext();
-            var spanContextFactory = new SpanContextFactory(threadContext);
-
-            var serverTracer = new ServiceTracer(threadContext, spanContextFactory, zipkinSubmitter);
-            var clientTracer = new ClientTracer(spanContextFactory, zipkinSubmitter);
+            var serverTracer = traceBuilder.BuildServiceTracer();
+            var clientTracer = traceBuilder.BuildClientTracer();
 
             var span = serverTracer.StartNewTrace("MicrocrumbsTraceGenerator");
 
