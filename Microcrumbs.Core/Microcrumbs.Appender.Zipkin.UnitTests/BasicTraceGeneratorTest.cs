@@ -28,6 +28,7 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
                         Id = 1,
                         Name = "GET",
                         Parent_id = 0,
+                        Timestamp = GetTimeStamp(),
                         Annotations = new List<global::Annotation>
                     {
                         new global::Annotation
