@@ -27,13 +27,16 @@ namespace Microcrumbs.Appender.Zipkin
                     protocol.Transport.Open();
                     var client = new ZipkinCollector.Client(protocol);
 
+                    Console.WriteLine(spanContext.TraceId);
+
                     var zspan = new Span()
                     {
                         Trace_id = ToLong(spanContext.TraceId),
                         Id = ToLong(spanContext.SpanId),
                         Name = "GET",
                         Parent_id = ToLong(spanContext.ParentId),
-                        Annotations = new List<global::Annotation>
+                        Timestamp = GetTimeStamp(),
+                        Annotations = new List<global::Annotation>()
                     {
                         new global::Annotation
                         {
