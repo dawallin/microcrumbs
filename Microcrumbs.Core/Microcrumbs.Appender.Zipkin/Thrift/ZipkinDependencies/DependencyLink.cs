@@ -58,7 +58,7 @@ public partial class DependencyLink : TBase
   }
 
   /// <summary>
-  /// calls made during the duration (in microseconds) of this link
+  /// calls made during the duration of this link
   /// </summary>
   public long CallCount
   {

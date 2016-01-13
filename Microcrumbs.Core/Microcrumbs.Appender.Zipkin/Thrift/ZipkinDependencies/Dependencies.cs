@@ -21,39 +21,39 @@ using Thrift.Transport;
 #endif
 public partial class Dependencies : TBase
 {
-  private long _start_time;
-  private long _end_time;
+  private long _start_ts;
+  private long _end_ts;
   private List<DependencyLink> _links;
 
   /// <summary>
-  /// microseconds from epoch
+  /// milliseconds from epoch
   /// </summary>
-  public long Start_time
+  public long Start_ts
   {
     get
     {
-      return _start_time;
+      return _start_ts;
     }
     set
     {
-      __isset.start_time = true;
-      this._start_time = value;
+      __isset.start_ts = true;
+      this._start_ts = value;
     }
   }
 
   /// <summary>
-  /// microseconds from epoch
+  /// milliseconds from epoch
   /// </summary>
-  public long End_time
+  public long End_ts
   {
     get
     {
-      return _end_time;
+      return _end_ts;
     }
     set
     {
-      __isset.end_time = true;
-      this._end_time = value;
+      __isset.end_ts = true;
+      this._end_ts = value;
     }
   }
 
@@ -76,8 +76,8 @@ public partial class Dependencies : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool start_time;
-    public bool end_time;
+    public bool start_ts;
+    public bool end_ts;
     public bool links;
   }
 
@@ -98,14 +98,14 @@ public partial class Dependencies : TBase
       {
         case 1:
           if (field.Type == TType.I64) {
-            Start_time = iprot.ReadI64();
+            Start_ts = iprot.ReadI64();
           } else { 
             TProtocolUtil.Skip(iprot, field.Type);
           }
           break;
         case 2:
           if (field.Type == TType.I64) {
-            End_time = iprot.ReadI64();
+            End_ts = iprot.ReadI64();
           } else { 
             TProtocolUtil.Skip(iprot, field.Type);
           }
@@ -141,20 +141,20 @@ public partial class Dependencies : TBase
     TStruct struc = new TStruct("Dependencies");
     oprot.WriteStructBegin(struc);
     TField field = new TField();
-    if (__isset.start_time) {
-      field.Name = "start_time";
+    if (__isset.start_ts) {
+      field.Name = "start_ts";
       field.Type = TType.I64;
       field.ID = 1;
       oprot.WriteFieldBegin(field);
-      oprot.WriteI64(Start_time);
+      oprot.WriteI64(Start_ts);
       oprot.WriteFieldEnd();
     }
-    if (__isset.end_time) {
-      field.Name = "end_time";
+    if (__isset.end_ts) {
+      field.Name = "end_ts";
       field.Type = TType.I64;
       field.ID = 2;
       oprot.WriteFieldBegin(field);
-      oprot.WriteI64(End_time);
+      oprot.WriteI64(End_ts);
       oprot.WriteFieldEnd();
     }
     if (Links != null && __isset.links) {
@@ -179,17 +179,17 @@ public partial class Dependencies : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("Dependencies(");
     bool __first = true;
-    if (__isset.start_time) {
+    if (__isset.start_ts) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Start_time: ");
-      __sb.Append(Start_time);
+      __sb.Append("Start_ts: ");
+      __sb.Append(Start_ts);
     }
-    if (__isset.end_time) {
+    if (__isset.end_ts) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("End_time: ");
-      __sb.Append(End_time);
+      __sb.Append("End_ts: ");
+      __sb.Append(End_ts);
     }
     if (Links != null && __isset.links) {
       if(!__first) { __sb.Append(", "); }

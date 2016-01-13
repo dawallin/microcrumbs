@@ -59,9 +59,7 @@
     <Compile Include="Thrift\ZipkinCore\Span.cs" />
     <Compile Include="Thrift\ZipkinCore\ZipkinCore.Constants.cs" />
     <Compile Include="Thrift\ZipkinDependencies\Dependencies.cs" />
-    <Compile Include="Thrift\ZipkinDependencies\DependenciesException.cs" />
     <Compile Include="Thrift\ZipkinDependencies\DependencyLink.cs" />
-    <Compile Include="Thrift\ZipkinDependencies\DependencyStore.cs" />
     <Compile Include="ZipkinSettings.cs" />
   </ItemGroup>
   <ItemGroup>

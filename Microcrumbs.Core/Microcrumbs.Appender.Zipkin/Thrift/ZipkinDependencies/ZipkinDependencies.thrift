@@ -21,36 +21,16 @@ struct DependencyLink {
   /** child service name (callee) */
   2: string child
   # 3: Moments OBSOLETE_duration_moments
-  /** calls made during the duration (in microseconds) of this link */
+  /** calls made during the duration of this link */
   4: i64 callCount
   # histogram?
 }
 
 /* An aggregate representation of services paired with every service they call. */
 struct Dependencies {
-  /** microseconds from epoch */
-  1: i64 start_time
-  /** microseconds from epoch */
-  2: i64 end_time
+  /** milliseconds from epoch */
+  1: i64 start_ts
+  /** milliseconds from epoch */
+  2: i64 end_ts
   3: list<DependencyLink> links
-}
-
-exception DependenciesException {
-  1: string msg
-}
-
-service DependencyStore {
-
-    void storeDependencies(
-      /** replaces the links defined for the given interval */
-      1: Dependencies dependencies
-    ) throws (1: DependenciesException e);
-
-    /* Return dependency links in an interval contained by start_time and end_time */
-    Dependencies getDependencies(
-      /* microseconds from epoch, defaults to one day before end_time */
-      1: optional i64 start_time,
-      /* microseconds from epoch, defaults to now */
-      2: optional i64 end_time
-    ) throws (1: DependenciesException qe);
 }
