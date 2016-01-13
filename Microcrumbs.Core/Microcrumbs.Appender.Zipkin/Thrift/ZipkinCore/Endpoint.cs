@@ -16,6 +16,9 @@ using Thrift.Protocol;
 using Thrift.Transport;
 
 
+/// <summary>
+/// Indicates the network context of a service involved in a span.
+/// </summary>
 #if !SILVERLIGHT
 [Serializable]
 #endif
@@ -25,6 +28,11 @@ public partial class Endpoint : TBase
   private short _port;
   private string _service_name;
 
+  /// <summary>
+  /// IPv4 host address packed into 4 bytes.
+  /// 
+  /// Ex for the ip 1.2.3.4, it would be (1 << 24) | (2 << 16) | (3 << 8) | 4
+  /// </summary>
   public int Ipv4
   {
     get
@@ -38,6 +46,11 @@ public partial class Endpoint : TBase
     }
   }
 
+  /// <summary>
+  /// IPv4 port or 0, if unknown.
+  /// 
+  /// Note: this is to be treated as an unsigned integer, so watch for negatives.
+  /// </summary>
   public short Port
   {
     get
@@ -51,6 +64,22 @@ public partial class Endpoint : TBase
     }
   }
 
+  /// <summary>
+  /// Classifier of a source or destination in lowercase, such as "zipkin-web".
+  /// 
+  /// This is the primary parameter for trace lookup, so should be intuitive as
+  /// possible, for example, matching names in service discovery.
+  /// 
+  /// Conventionally, when the service name isn't known, service_name = "unknown".
+  /// However, it is also permissible to set service_name = "" (empty string).
+  /// The difference in the latter usage is that the span will not be queryable
+  /// by service name unless more information is added to the span with non-empty
+  /// service name, e.g. an additional annotation from the server.
+  /// 
+  /// Particularly clients may not have a reliable service name at ingest. One
+  /// approach is to set service_name to "" at ingest, and later assign a
+  /// better label based on binary annotations, such as user agent.
+  /// </summary>
   public string Service_name
   {
     get

@@ -16,6 +16,11 @@ using Thrift.Protocol;
 using Thrift.Transport;
 
 
+/// <summary>
+/// Associates an event that explains latency with a timestamp.
+/// 
+/// Unlike log statements, annotations are often codes: for example "sr".
+/// </summary>
 #if !SILVERLIGHT
 [Serializable]
 #endif
@@ -25,6 +30,12 @@ public partial class Annotation : TBase
   private string _value;
   private Endpoint _host;
 
+  /// <summary>
+  /// Microseconds from epoch.
+  /// 
+  /// This value should use the most precise value possible. For example,
+  /// gettimeofday or syncing nanoTime against a tick of currentTimeMillis.
+  /// </summary>
   public long Timestamp
   {
     get
@@ -38,6 +49,9 @@ public partial class Annotation : TBase
     }
   }
 
+  /// <summary>
+  /// Usually a short tag indicating an event, like "sr" or "finagle.retry".
+  /// </summary>
   public string Value
   {
     get
@@ -51,6 +65,9 @@ public partial class Annotation : TBase
     }
   }
 
+  /// <summary>
+  /// The host that recorded the value, primarily for query by service name.
+  /// </summary>
   public Endpoint Host
   {
     get

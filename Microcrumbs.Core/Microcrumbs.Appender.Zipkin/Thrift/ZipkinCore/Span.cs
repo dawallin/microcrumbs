@@ -16,6 +16,20 @@ using Thrift.Protocol;
 using Thrift.Transport;
 
 
+/// <summary>
+/// A trace is a series of spans (often RPC calls) which form a latency tree.
+/// 
+/// Spans are usually created by instrumentation in RPC clients or servers, but
+/// can also represent in-process activity. Annotations in spans are similar to
+/// log statements, and are sometimes created directly by application developers
+/// to indicate events of interest, such as a cache miss.
+/// 
+/// The root span is where parent_id = Nil; it usually has the longest duration
+/// in the trace.
+/// 
+/// Span identifiers are packed into i64s, but should be treated opaquely.
+/// String encoding is fixed-width lower-hex, to avoid signed interpretation.
+/// </summary>
 #if !SILVERLIGHT
 [Serializable]
 #endif
@@ -28,7 +42,12 @@ public partial class Span : TBase
   private List<Annotation> _annotations;
   private List<BinaryAnnotation> _binary_annotations;
   private bool _debug;
+  private long _timestamp;
+  private long _duration;
 
+  /// <summary>
+  /// Unique 8-byte identifier for a trace, set on all spans within it.
+  /// </summary>
   public long Trace_id
   {
     get
@@ -42,6 +61,10 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// Span name in lowercase, rpc method for example. Conventionally, when the
+  /// span name isn't known, name = "unknown".
+  /// </summary>
   public string Name
   {
     get
@@ -55,6 +78,10 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// Unique 8-byte identifier of this span within a trace. A span is uniquely
+  /// identified in storage by (trace_id, id).
+  /// </summary>
   public long Id
   {
     get
@@ -68,6 +95,9 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// The parent's Span.id; absent if this the root span in a trace.
+  /// </summary>
   public long Parent_id
   {
     get
@@ -81,6 +111,11 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// Associates events that explain latency with a timestamp. Unlike log
+  /// statements, annotations are often codes: for example SERVER_RECV("sr").
+  /// Annotations are sorted ascending by timestamp.
+  /// </summary>
   public List<Annotation> Annotations
   {
     get
@@ -94,6 +129,10 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// Tags a span with context, usually to support query or aggregation. For
+  /// example, a binary annotation key could be "http.uri".
+  /// </summary>
   public List<BinaryAnnotation> Binary_annotations
   {
     get
@@ -107,6 +146,9 @@ public partial class Span : TBase
     }
   }
 
+  /// <summary>
+  /// True is a request to store this span even if it overrides sampling policy.
+  /// </summary>
   public bool Debug
   {
     get
@@ -117,6 +159,71 @@ public partial class Span : TBase
     {
       __isset.debug = true;
       this._debug = value;
+    }
+  }
+
+  /// <summary>
+  /// Epoch microseconds of the start of this span, absent if this an incomplete
+  /// span.
+  /// 
+  /// This value should be set directly by instrumentation, using the most
+  /// precise value possible. For example, gettimeofday or syncing nanoTime
+  /// against a tick of currentTimeMillis.
+  /// 
+  /// For compatibilty with instrumentation that precede this field, collectors
+  /// or span stores can derive this via Annotation.timestamp.
+  /// For example, SERVER_RECV.timestamp or CLIENT_SEND.timestamp.
+  /// 
+  /// Timestamp is nullable for input only. Spans without a timestamp cannot be
+  /// presented in a timeline: Span stores should not output spans missing a
+  /// timestamp.
+  /// 
+  /// There are two known edge-cases where this could be absent: both cases
+  /// exist when a collector receives a span in parts and a binary annotation
+  /// precedes a timestamp. This is possible when..
+  ///  - The span is in-flight (ex not yet received a timestamp)
+  ///  - The span's start event was lost
+  /// </summary>
+  public long Timestamp
+  {
+    get
+    {
+      return _timestamp;
+    }
+    set
+    {
+      __isset.timestamp = true;
+      this._timestamp = value;
+    }
+  }
+
+  /// <summary>
+  /// Measurement in microseconds of the critical path, if known.
+  /// 
+  /// This value should be set directly, as opposed to implicitly via annotation
+  /// timestamps. Doing so encourages precision decoupled from problems of
+  /// clocks, such as skew or NTP updates causing time to move backwards.
+  /// 
+  /// For compatibility with instrumentation that precede this field, collectors
+  /// or span stores can derive this by subtracting Annotation.timestamp.
+  /// For example, SERVER_SEND.timestamp - SERVER_RECV.timestamp.
+  /// 
+  /// If this field is persisted as unset, zipkin will continue to work, except
+  /// duration query support will be implementation-specific. Similarly, setting
+  /// this field non-atomically is implementation-specific.
+  /// 
+  /// This field is i64 vs i32 to support spans longer than 35 minutes.
+  /// </summary>
+  public long Duration
+  {
+    get
+    {
+      return _duration;
+    }
+    set
+    {
+      __isset.duration = true;
+      this._duration = value;
     }
   }
 
@@ -133,6 +240,8 @@ public partial class Span : TBase
     public bool annotations;
     public bool binary_annotations;
     public bool debug;
+    public bool timestamp;
+    public bool duration;
   }
 
   public Span() {
@@ -223,6 +332,20 @@ public partial class Span : TBase
             TProtocolUtil.Skip(iprot, field.Type);
           }
           break;
+        case 10:
+          if (field.Type == TType.I64) {
+            Timestamp = iprot.ReadI64();
+          } else { 
+            TProtocolUtil.Skip(iprot, field.Type);
+          }
+          break;
+        case 11:
+          if (field.Type == TType.I64) {
+            Duration = iprot.ReadI64();
+          } else { 
+            TProtocolUtil.Skip(iprot, field.Type);
+          }
+          break;
         default: 
           TProtocolUtil.Skip(iprot, field.Type);
           break;
@@ -306,6 +429,22 @@ public partial class Span : TBase
       oprot.WriteBool(Debug);
       oprot.WriteFieldEnd();
     }
+    if (__isset.timestamp) {
+      field.Name = "timestamp";
+      field.Type = TType.I64;
+      field.ID = 10;
+      oprot.WriteFieldBegin(field);
+      oprot.WriteI64(Timestamp);
+      oprot.WriteFieldEnd();
+    }
+    if (__isset.duration) {
+      field.Name = "duration";
+      field.Type = TType.I64;
+      field.ID = 11;
+      oprot.WriteFieldBegin(field);
+      oprot.WriteI64(Duration);
+      oprot.WriteFieldEnd();
+    }
     oprot.WriteFieldStop();
     oprot.WriteStructEnd();
   }
@@ -354,6 +493,18 @@ public partial class Span : TBase
       __first = false;
       __sb.Append("Debug: ");
       __sb.Append(Debug);
+    }
+    if (__isset.timestamp) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Timestamp: ");
+      __sb.Append(Timestamp);
+    }
+    if (__isset.duration) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Duration: ");
+      __sb.Append(Duration);
     }
     __sb.Append(")");
     return __sb.ToString();

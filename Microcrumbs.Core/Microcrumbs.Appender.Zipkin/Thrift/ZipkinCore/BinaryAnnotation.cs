@@ -16,6 +16,21 @@ using Thrift.Protocol;
 using Thrift.Transport;
 
 
+/// <summary>
+/// Binary annotations are tags applied to a Span to give it context. For
+/// example, a binary annotation of "http.uri" could the path to a resource in a
+/// RPC call.
+/// 
+/// Binary annotations of type STRING are always queryable, though more a
+/// historical implementation detail than a structural concern.
+/// 
+/// Binary annotations can repeat, and vary on the host. Similar to Annotation,
+/// the host indicates who logged the event. This allows you to tell the
+/// difference between the client and server side of the same key. For example,
+/// the key "http.uri" might be different on the client and server side due to
+/// rewriting, like "/api/v1/myresource" vs "/myresource. Via the host field,
+/// you can see the different points of view, which often help in debugging.
+/// </summary>
 #if !SILVERLIGHT
 [Serializable]
 #endif
@@ -26,6 +41,9 @@ public partial class BinaryAnnotation : TBase
   private AnnotationType _annotation_type;
   private Endpoint _host;
 
+  /// <summary>
+  /// Name used to lookup spans, such as "http.uri" or "finagle.version".
+  /// </summary>
   public string Key
   {
     get
@@ -39,6 +57,11 @@ public partial class BinaryAnnotation : TBase
     }
   }
 
+  /// <summary>
+  /// Serialized thrift bytes, in TBinaryProtocol format.
+  /// 
+  /// For legacy reasons, byte order is big-endian. See THRIFT-3217.
+  /// </summary>
   public byte[] Value
   {
     get
@@ -53,6 +76,9 @@ public partial class BinaryAnnotation : TBase
   }
 
   /// <summary>
+  /// The thrift type of value, most often STRING.
+  /// 
+  /// annotation_type shouldn't vary for the same key.
   /// 
   /// <seealso cref="AnnotationType"/>
   /// </summary>
@@ -69,6 +95,13 @@ public partial class BinaryAnnotation : TBase
     }
   }
 
+  /// <summary>
+  /// The host that recorded value, allowing query by service name or address.
+  /// 
+  /// There are two exceptions: when key is "ca" or "sa", this is the source or
+  /// destination of an RPC. This exception allows zipkin to display network
+  /// context of uninstrumented services, such as browsers or databases.
+  /// </summary>
   public Endpoint Host
   {
     get

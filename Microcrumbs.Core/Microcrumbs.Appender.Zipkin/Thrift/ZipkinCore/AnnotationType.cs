@@ -5,13 +5,25 @@
  *  @generated
  */
 
+/// <summary>
+/// A subset of thrift base types, except BYTES.
+/// </summary>
 public enum AnnotationType
 {
+  /// <summary>
+  /// Set to 0x01 when key is CLIENT_ADDR or SERVER_ADDR
+  /// </summary>
   BOOL = 0,
+  /// <summary>
+  /// No encoding, or type is unknown.
+  /// </summary>
   BYTES = 1,
   I16 = 2,
   I32 = 3,
   I64 = 4,
   DOUBLE = 5,
+  /// <summary>
+  /// the only type zipkin v1 supports search against.
+  /// </summary>
   STRING = 6,
 }
