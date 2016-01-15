@@ -8,7 +8,7 @@
 		<projectUrl>http://microcrumbs.dawallin.com</projectUrl>
 		<licenseUrl>https://raw.githubusercontent.com/dawallin/microcrumbs/master/LICENSE</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Tracer library for distributed tracing.</description>
+        <description>Tracer library for distributed tracing. This is still an early beta version and the API may change. </description>
         <tags>distributed tracing zipkin pinpoint htrace dapper</tags>
     </metadata>
     <files>
