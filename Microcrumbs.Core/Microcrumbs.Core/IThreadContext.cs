@@ -1,8 +1,10 @@
-﻿namespace Microcrumbs.Core
+﻿using System;
+
+namespace Microcrumbs.Core
 {
-    internal interface IThreadContext
+    internal interface IThreadContext : IDisposable
     {
-        void Set(SpanContext spanContext);
-        SpanContext Get();
+        IDisposable Push(SpanContext spanContext);
+        SpanContext GetTop();
     }
 }

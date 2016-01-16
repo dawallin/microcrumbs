@@ -16,7 +16,7 @@
         public Span StartNewTrace(string serviceName)
         {
             var newSpanContext = _spanContextFactory.NewTrace(serviceName);
-            _threadContext.Set(newSpanContext);
+            _threadContext.Push(newSpanContext);
             _spanSubmitter.Send(SpanType.ServerRecieve, newSpanContext);
 
             return new Span(newSpanContext, FinishRequest);
@@ -24,12 +24,13 @@
 
         public void ContinueTrace(SpanContext spanContext)
         {
-            _threadContext.Set(spanContext);
+            _threadContext.Push(spanContext);
             _spanSubmitter.Send(SpanType.ServerRecieve, spanContext);
         }
 
         public void FinishRequest(SpanContext spanContext)
         {
+            _threadContext.Dispose();
             _spanSubmitter.Send(SpanType.ServerSend, spanContext);
         }
     }

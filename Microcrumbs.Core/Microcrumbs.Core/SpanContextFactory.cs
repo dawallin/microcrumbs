@@ -15,7 +15,7 @@ namespace Microcrumbs.Core
 
         public SpanContext NewSpan(IThreadContext threadContext)
         {
-            var parentSpanContext = threadContext.Get();
+            var parentSpanContext = threadContext.GetTop();
             var childSpanContext = new SpanContext(parentSpanContext.ServiceName, parentSpanContext.TraceId, parentSpanContext.SpanId, NewGuid());
             return childSpanContext;
         }

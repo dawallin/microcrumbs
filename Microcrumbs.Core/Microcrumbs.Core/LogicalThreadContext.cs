@@ -1,92 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 
 namespace Microcrumbs.Core
 {
     internal class LogicalThreadContext : IThreadContext
     {
-        private const string ServiceNamePropertyName = "Microcrumbs:ServiceName";
-        private const string TraceIdPropertyName = "Microcrumbs:TraceId";
-        private const string ParentIdPropertyName = "Microcrumbs:ParentId";
-        private const string SpanIdPropertyName = "Microcrumbs:SpanId";
+        private const string StackCallContextName = "Microcrumbs:SpanStack";
 
-        public SpanContext Get()
+        private Stack<SpanContext> spanStack
         {
-            return new SpanContext(ServiceName, TraceId, ParentId, SpanId);
-        }
-
-        public void Set(SpanContext spanContext)
-        {
-            ServiceName = spanContext.ServiceName;
-            TraceId = spanContext.TraceId;
-            ParentId = spanContext.ParentId;
-            SpanId = spanContext.SpanId;
-        }
-
-        private string ServiceName
-        {
-            get { return GetString(ServiceNamePropertyName); }
-            set { SetString(ServiceNamePropertyName, value); }
-        }
-
-        private ulong? TraceId
-        {
-            get { return GetUlong(TraceIdPropertyName); }
-            set { SetUlong(TraceIdPropertyName, value); }
-        }
-
-        private ulong? ParentId
-        {
-            get { return GetUlong(ParentIdPropertyName); }
-            set { SetUlong(ParentIdPropertyName, value); }
-        }
-
-        private ulong? SpanId
-        {
-            get { return GetUlong(SpanIdPropertyName); }
-            set { SetUlong(SpanIdPropertyName, value); }
-        }
-
-        private string GetString(string properyName)
-        {
-            var propertyObject = CallContext.LogicalGetData(properyName);
-            if (propertyObject == null)
+            get
             {
-                return null;
+                var value = CallContext.LogicalGetData(StackCallContextName);
+                return value == null ? new Stack<SpanContext>() : value as Stack<SpanContext>;
             }
-
-            return propertyObject.ToString();
-        }
-
-        private void SetString(string properyName, string value)
-        {
-            CallContext.LogicalSetData(properyName, value);
-        }
-
-        private ulong? GetUlong(string properyName)
-        {
-            var propertyObject = CallContext.LogicalGetData(properyName);
-            if (propertyObject == null)
+            set
             {
-                return null;
-            }
-
-            ulong propertyValue;
-            var couldParse = UInt64.TryParse(propertyObject.ToString(), out propertyValue);
-
-            if (couldParse)
-            {
-                return propertyValue;
-            }
-            else
-            {
-                return null;
+                CallContext.LogicalSetData(StackCallContextName, value);
             }
         }
 
-        private void SetUlong(string properyName, ulong? value)
+        public SpanContext GetTop()
         {
-            CallContext.LogicalSetData(properyName, value);
+            var topSpan = spanStack.Peek();
+            var serviceName = topSpan.ServiceName;
+            var traceId = topSpan.TraceId;
+            var parentId = topSpan.ParentId;
+            var spanId = topSpan.SpanId;
+
+            return new SpanContext(serviceName, traceId, parentId, spanId);
+        }
+
+        public IDisposable Push(SpanContext spanContext)
+        {
+            spanStack = spanStack;
+            spanStack.Push(spanContext);
+            spanStack = spanStack;
+
+            return this;
+        }
+
+        public void Dispose()
+        {
+            spanStack = spanStack;
+            spanStack.Pop();
+            spanStack = spanStack;
         }
     }
 }

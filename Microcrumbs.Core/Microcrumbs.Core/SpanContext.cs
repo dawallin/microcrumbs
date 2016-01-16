@@ -1,5 +1,8 @@
-﻿namespace Microcrumbs.Core
+﻿using System;
+
+namespace Microcrumbs.Core
 {
+    [Serializable]
     public class SpanContext
     {
         public SpanContext(string serviceName, ulong? traceId, ulong? parentId, ulong? spanId)
