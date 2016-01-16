@@ -27,7 +27,7 @@ namespace Microcrumbs.Appender.Zipkin
                     protocol.Transport.Open();
                     var client = new ZipkinCollector.Client(protocol);
 
-                    Console.WriteLine(spanContext.TraceId);
+                    Console.WriteLine("T: " + spanContext.TraceId + "; P: " + spanContext.ParentId + "; S: " + spanContext.SpanId + "; SN" + spanContext.ServiceName);
 
                     var zspan = new Span()
                     {
