@@ -16,7 +16,8 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
             };
 
             var zipkinSubmitter = new DirectZipkinSubmitter(zipkinSettings);
-            var traceBuilder = new TracerBuilder().SetSpanSubmitter(zipkinSubmitter);
+            var zipkinInterceptor = new ZipkinSpanInterceptor(zipkinSubmitter);
+            var traceBuilder = new TracerBuilder().SetSpanSubmitter(zipkinInterceptor);
 
             var serverTracer = traceBuilder.BuildServiceTracer();
             var clientTracer = traceBuilder.BuildClientTracer();

@@ -1,4 +1,6 @@
-﻿namespace Microcrumbs.Core
+using Microcrumbs.Core;
+
+namespace Microcrumbs.Appender.Zipkin
 {
     public interface ISpanSubmitter
     {

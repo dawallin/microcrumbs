@@ -4,20 +4,20 @@
     {
         private readonly IThreadContext _threadContext;
         private readonly ISpanContextFactory _spanContextFactory;
-        private readonly ISpanSubmitter _spanSubmitter;
+        private readonly ISpanInterceptor _spanInterceptor;
 
-        internal ServiceTracer(IThreadContext threadContext, ISpanContextFactory spanContextFactory, ISpanSubmitter spanSubmitter)
+        internal ServiceTracer(IThreadContext threadContext, ISpanContextFactory spanContextFactory, ISpanInterceptor _spanInterceptor)
         {
             _threadContext = threadContext;
             _spanContextFactory = spanContextFactory;
-            _spanSubmitter = spanSubmitter;
+            this._spanInterceptor = _spanInterceptor;
         }
 
         public Span StartNewTrace(string serviceName)
         {
             var newSpanContext = _spanContextFactory.NewTrace(serviceName);
             _threadContext.Push(newSpanContext);
-            _spanSubmitter.Send(SpanType.ServerRecieve, newSpanContext);
+            _spanInterceptor.NewTraceCreated(newSpanContext);
 
             return new Span(newSpanContext, FinishRequest);
         }
@@ -25,13 +25,13 @@
         public void ContinueTrace(SpanContext spanContext)
         {
             _threadContext.Push(spanContext);
-            _spanSubmitter.Send(SpanType.ServerRecieve, spanContext);
+            _spanInterceptor.NewTraceCreated(spanContext);
         }
 
         public void FinishRequest(SpanContext spanContext)
         {
             _threadContext.Dispose();
-            _spanSubmitter.Send(SpanType.ServerSend, spanContext);
+            _spanInterceptor.TraceFinished(spanContext);
         }
     }
 }
