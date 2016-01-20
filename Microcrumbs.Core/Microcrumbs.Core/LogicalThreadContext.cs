@@ -8,12 +8,12 @@ namespace Microcrumbs.Core
     {
         private const string StackCallContextName = "Microcrumbs:SpanStack";
 
-        private Stack<SpanContext> spanStack
+        private Stack<TraceContext> spanStack
         {
             get
             {
                 var value = CallContext.LogicalGetData(StackCallContextName);
-                return value == null ? new Stack<SpanContext>() : value as Stack<SpanContext>;
+                return value == null ? new Stack<TraceContext>() : value as Stack<TraceContext>;
             }
             set
             {
@@ -21,7 +21,7 @@ namespace Microcrumbs.Core
             }
         }
 
-        public SpanContext GetTop()
+        public TraceContext GetTop()
         {
             var topSpan = spanStack.Peek();
             var serviceName = topSpan.ServiceName;
@@ -29,10 +29,10 @@ namespace Microcrumbs.Core
             var parentId = topSpan.ParentId;
             var spanId = topSpan.SpanId;
 
-            return new SpanContext(serviceName, traceId, parentId, spanId);
+            return new TraceContext(serviceName, traceId, parentId, spanId);
         }
 
-        public IDisposable Push(SpanContext spanContext)
+        public IDisposable Push(TraceContext spanContext)
         {
             spanStack = spanStack;
             spanStack.Push(spanContext);

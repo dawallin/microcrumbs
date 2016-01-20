@@ -42,16 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientTracer.cs" />
-    <Compile Include="ISpanContextFactory.cs" />
-    <Compile Include="ISpanInterceptor.cs" />
+    <Compile Include="ITraceContextFactory.cs" />
+    <Compile Include="ITraceEvents.cs" />
     <Compile Include="IThreadContext.cs" />
     <Compile Include="LogicalThreadContext.cs" />
-    <Compile Include="ServiceTracer.cs" />
+    <Compile Include="Tracer.cs" />
     <Compile Include="Span.cs" />
-    <Compile Include="SpanContext.cs" />
+    <Compile Include="TraceContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpanContextFactory.cs" />
+    <Compile Include="TraceContextFactory.cs" />
     <Compile Include="TracerBuilder.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,7 @@ namespace Microcrumbs.Core
 {
     internal interface IThreadContext : IDisposable
     {
-        IDisposable Push(SpanContext spanContext);
-        SpanContext GetTop();
+        IDisposable Push(TraceContext spanContext);
+        TraceContext GetTop();
     }
 }

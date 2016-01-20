@@ -17,7 +17,7 @@ namespace Microcrumbs.Appender.Zipkin
             _zipkinSettings = zipkinSettings;
         }
 
-        public void Send(SpanType spanType, SpanContext spanContext)
+        public void Send(SpanType spanType, TraceContext traceContext)
         {
             using (var socket = new TSocket(_zipkinSettings.Host, _zipkinSettings.Port))
             {
@@ -27,14 +27,14 @@ namespace Microcrumbs.Appender.Zipkin
                     protocol.Transport.Open();
                     var client = new ZipkinCollector.Client(protocol);
 
-                    Console.WriteLine("T: " + spanContext.TraceId + "; P: " + spanContext.ParentId + "; S: " + spanContext.SpanId + "; SN" + spanContext.ServiceName);
+                    Console.WriteLine("T: " + traceContext.TraceId + "; P: " + traceContext.ParentId + "; S: " + traceContext.SpanId + "; SN" + traceContext.ServiceName);
 
                     var zspan = new Span()
                     {
-                        Trace_id = ToLong(spanContext.TraceId),
-                        Id = ToLong(spanContext.SpanId),
+                        Trace_id = ToLong(traceContext.TraceId),
+                        Id = ToLong(traceContext.SpanId),
                         Name = "GET",
-                        Parent_id = ToLong(spanContext.ParentId),
+                        Parent_id = ToLong(traceContext.ParentId),
                         Timestamp = GetTimeStamp(),
                         Annotations = new List<global::Annotation>()
                     {
@@ -44,7 +44,7 @@ namespace Microcrumbs.Appender.Zipkin
                             {
                                 Ipv4 = BitConverter.ToInt32(IPAddress.Parse("127.0.0.1").GetAddressBytes(), 0),
                                 Port = 80,
-                                Service_name = spanContext.ServiceName,
+                                Service_name = traceContext.ServiceName,
                             },
                             Value=ToSpanType(spanType),
                             Timestamp=GetTimeStamp(),

@@ -2,19 +2,23 @@
 
 namespace Microcrumbs.Core
 {
-    public class Span
+    public class Span : IDisposable
     {
-        private readonly Action<SpanContext> _finishCallback;
-        public SpanContext Context { get; }
+        private readonly Action<TraceContext> _finishCallback;
+        public TraceContext Context { get; }
 
-        public Span(SpanContext context, Action<SpanContext> finishCallback)
+        public Span(TraceContext context, Action<TraceContext> finishCallback)
         {
             _finishCallback = finishCallback;
             Context = context;
         }
 
-        public void Finish()
+        private bool isDisposed = false;
+        public void Dispose()
         {
+            if (isDisposed)
+                return;
+
             _finishCallback(Context);
         }
     }

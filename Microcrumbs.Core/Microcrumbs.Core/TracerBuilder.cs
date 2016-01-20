@@ -5,37 +5,28 @@ namespace Microcrumbs.Core
     public class TracerBuilder
     {
         private readonly LogicalThreadContext _threadContext = new LogicalThreadContext();
-        private readonly SpanContextFactory _spanContextFactory = new SpanContextFactory();
-        private ISpanInterceptor _spanInterceptor = null;
+        private readonly TraceContextFactory _traceContextFactory = new TraceContextFactory();
+        private ITraceEvents _traceEvents = null;
 
         public TracerBuilder()
         {
             
         }
 
-        public TracerBuilder SetSpanSubmitter(ISpanInterceptor spanInterceptor)
+        public TracerBuilder SetSpanSubmitter(ITraceEvents traceEvents)
         {
-            _spanInterceptor = spanInterceptor;
+            _traceEvents = traceEvents;
             return this;
         }
 
-        public ServiceTracer BuildServiceTracer()
+        public Tracer BuildTracer()
         {
-            if (_spanInterceptor == null)
+            if (_traceEvents == null)
             {
                 throw new ArgumentNullException("No span interceptor set.");
             }
 
-            return new ServiceTracer(_threadContext, _spanContextFactory, _spanInterceptor);
-        }
-        public ClientTracer BuildClientTracer()
-        {
-            if (_spanInterceptor == null)
-            {
-                throw new ArgumentNullException("No span interceptor set.");
-            }
-
-            return new ClientTracer(_threadContext, _spanContextFactory, _spanInterceptor);
+            return new Tracer(_threadContext, _traceContextFactory, _traceEvents);
         }
     }
 }

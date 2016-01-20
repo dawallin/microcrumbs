@@ -16,36 +16,40 @@ namespace Microcrumbs.Appender.Zipkin.UnitTests
             };
 
             var zipkinSubmitter = new DirectZipkinSubmitter(zipkinSettings);
-            var zipkinInterceptor = new ZipkinSpanInterceptor(zipkinSubmitter);
+            var zipkinInterceptor = new ZipkinTraceEventListener(zipkinSubmitter);
             var traceBuilder = new TracerBuilder().SetSpanSubmitter(zipkinInterceptor);
 
-            var serverTracer = traceBuilder.BuildServiceTracer();
-            var clientTracer = traceBuilder.BuildClientTracer();
+            var tracer = traceBuilder.BuildTracer();
 
-            var span = serverTracer.StartNewTrace("MicrocrumbsTraceGenerator");
+            using (var span = tracer.StartNewTrace("MicrocrumbsTraceGenerator"))
+            {
+                using (var span1 = tracer.StartChildTrace("CallOut"))
+                {
+                    var spanContext = new TraceContext("InnerService", span1.Context.TraceId, span1.Context.ParentId,
+                        span1.Context.SpanId);
+                    using (tracer.JoinTrace(spanContext))
+                    {
+                        using (var span1b = tracer.StartChildTrace("Callout1b"))
+                        {
+                            var spanContext1b = new TraceContext("InnerService1b", span1b.Context.TraceId,
+                                span1b.Context.ParentId, span1b.Context.SpanId);
 
-            var span1 = clientTracer.StartClientSpan("CallOut");
+                            using (tracer.JoinTrace(spanContext1b))
+                            {
+                            }
+                        }
+                    }
+                }
 
-            var spanContext = new SpanContext("InnerService", span1.Context.TraceId, span1.Context.ParentId, span1.Context.SpanId);
-            serverTracer.ContinueTrace(spanContext);
-
-            var span1b = clientTracer.StartClientSpan("Callout1b");
-            var spanContext1b = new SpanContext("InnerService1b", span1b.Context.TraceId, span1b.Context.ParentId, span1b.Context.SpanId);
-            serverTracer.ContinueTrace(spanContext1b);
-            serverTracer.FinishRequest(spanContext1b);
-            span1b.Finish();
-
-            serverTracer.FinishRequest(spanContext);
-
-            span1.Finish();
- 
-            var span2 = clientTracer.StartClientSpan("CallOut2");
-            var spanContext2 = new SpanContext("InnerService2", span2.Context.TraceId, span2.Context.ParentId, span2.Context.SpanId);
-            serverTracer.ContinueTrace(spanContext2);
-            serverTracer.FinishRequest(spanContext2);
-            span2.Finish();
-
-            span.Finish();
+                using (var span2 = tracer.StartChildTrace("CallOut2"))
+                {
+                    var spanContext2 = new TraceContext("InnerService2", span2.Context.TraceId, span2.Context.ParentId,
+                        span2.Context.SpanId);
+                    using (tracer.JoinTrace(spanContext2))
+                    {
+                    }
+                }
+            }
         }
     }
 }

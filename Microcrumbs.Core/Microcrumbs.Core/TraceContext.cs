@@ -3,9 +3,9 @@
 namespace Microcrumbs.Core
 {
     [Serializable]
-    public class SpanContext
+    public class TraceContext
     {
-        public SpanContext(string serviceName, ulong? traceId, ulong? parentId, ulong? spanId)
+        public TraceContext(string serviceName, ulong? traceId, ulong? parentId, ulong? spanId)
         {
             ServiceName = serviceName;
             TraceId = traceId;

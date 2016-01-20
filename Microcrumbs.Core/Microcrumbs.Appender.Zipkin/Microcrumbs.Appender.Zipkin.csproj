@@ -65,7 +65,7 @@
     <Compile Include="Thrift\ZipkinDependencies\Dependencies.cs" />
     <Compile Include="Thrift\ZipkinDependencies\DependencyLink.cs" />
     <Compile Include="ZipkinSettings.cs" />
-    <Compile Include="ZipkinSpanSubmitter.cs" />
+    <Compile Include="ZipkinTraceEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Thrift\thrift-0.9.2.exe" />
