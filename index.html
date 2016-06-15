@@ -32,12 +32,16 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="microcrumbs--" class="anchor" href="#microcrumbs--" aria-hidden="true"><span class="octicon octicon-link"></span></a>Microcrumbs <a href="https://ci.appveyor.com/project/dawallin/microcrumbs"><img src="https://ci.appveyor.com/api/projects/status/github/dawallin/microcrumbs?branch=master&amp;svg=true" alt="Build status"></a> </h1>
+<a id="microcrumbs--" class="anchor" href="#microcrumbs--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Microcrumbs <a href="https://ci.appveyor.com/project/dawallin/microcrumbs"><img src="https://ci.appveyor.com/api/projects/status/github/dawallin/microcrumbs?branch=master&amp;svg=true" alt="Build status"></a> </h1>
 
-<p>Microcrumbs is an open source, .Net tracer library for distributed tracing. </p>
+<p>Microcrumbs is all about distributed tracing. Here you will find information how to gather trace information for a request jumping between different microservices. </p>
 
-<h3>
-<a id="what-is-distributed-tracing" class="anchor" href="#what-is-distributed-tracing" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is distributed tracing?</h3>
+<p>Microcrumbs supports the Open Source initiative, <a href="http://opentracing.io/">Open Tracing API</a>, which standardize a language independent tracing API without vendor lock-in.</p>
+
+<p>The focus for Microcrumbs is on .Net BUT since the terminology, techniques and visualization tools are language agnostic there is plenty of information even for non .Net visitors.</p>
+
+<h2>
+<a id="what-is-distributed-tracing" class="anchor" href="#what-is-distributed-tracing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is distributed tracing?</h2>
 
 <p>In the world of microservices, responsibilities are broken down into small individual pieces, loosely coupled often connected first at runtime. The connection could be an event where the publisher is even unaware of who is subscribing. </p>
 
@@ -45,15 +49,40 @@
 <p><strong>Distributed tracing</strong> binds together what started an interaction and which actors that were involved.</p>
 </blockquote>
 
-<h3>
-<a id="end-to-end-tracing" class="anchor" href="#end-to-end-tracing" aria-hidden="true"><span class="octicon octicon-link"></span></a>End-to-End tracing</h3>
+<h2>
+<a id="end-to-end-tracing" class="anchor" href="#end-to-end-tracing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>End-to-End tracing</h2>
 
 <p>The tracer data can then be sent to a centralized collector. From there it can be used for monitoring, querying or analysing in end-to-end distributor tracing tools like <a href="https://twitter.github.io/zipkin/">Zipkin</a>,  <a href="https://github.com/naver/pinpoint">PinPoint</a> or <a href="https://github.com/mattheath/phosphor">Phosphor</a>. All these are based on the technique from the Google <a href="https://research.google.com/pubs/pub36356.html">Dapper project</a>.</p>
 
-<h3>
-<a id="project-scope" class="anchor" href="#project-scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project scope</h3>
+<h2>
+<a id="project-scope" class="anchor" href="#project-scope" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project scope</h2>
 
-<p>Microcrumbs adhere to the Unix Philosophy ("Write programs that do one thing and do it well."), and is specialiced in only one thing, gathering interaction data. Analysis and presentaion is left for other projects.</p>
+<h1>
+<a id="suggested-reading" class="anchor" href="#suggested-reading" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Suggested reading</h1>
+
+<h2>
+<a id="projects--websites" class="anchor" href="#projects--websites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Projects / Websites</h2>
+
+<ul>
+<li><a href="http://opentracing.io/">Open Tracing</a></li>
+<li><a href="http://zipkin.io/">Open Zipkin</a></li>
+</ul>
+
+<h2>
+<a id="blog-posts" class="anchor" href="#blog-posts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Blog posts</h2>
+
+<ul>
+<li><a href="http://thelastpickle.com/blog/2016/03/16/a-reply-to-the-network-is-the-kingmaker.html">A reply to the network is the kingmaker</a></li>
+<li><a href="Towards%20Turnkey%20Distributed%20Tracing">Towards Turnkey Distributed Tracing</a></li>
+</ul>
+
+<h2>
+<a id="academic-papers" class="anchor" href="#academic-papers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Academic papers</h2>
+
+<ul>
+<li><a href="http://research.google.com/pubs/pub36356.html">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure, B. H. Sigelman et al., 2010</a></li>
+<li><a href="http://www.pdl.cmu.edu/PDL-FTP/SelfStar/CMU-PDL-14-102_abs.shtml">So, you want to trace your distributed system, R. R. Sambasivan et al., 2014</a></li>
+</ul>
       </section>
     </div>
 
